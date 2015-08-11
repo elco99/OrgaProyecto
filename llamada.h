@@ -7,17 +7,16 @@ class Llamada{
 		double FechaInicio;
 		double FechaFinal;
 		int IdCiudad;
-	/*public:
+	public:
 		Llamada(int, double, double, int);
 	    void setNumero(int Id);
 	    void setFechaInicio(double Final);
 	    void setFechaFinal(double Inicio);
 	    void setIdCiudad(int IdCiudad);
-	    int getId();
-	    char* getName();
-
-	    char getGender();
-	    int setIdCiudad();*/
+	    int getNumero();
+	    double getFechaInicio();
+	    double getFechaFinal();
+	    int setIdCiudad();
 
 };
 
