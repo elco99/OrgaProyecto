@@ -9,6 +9,7 @@ class Llamada{
 		int IdCiudad;
 	public:
 		Llamada(int, double, double, int);
+<<<<<<< HEAD
 	    void setNumero(int Id);
 	    void setFechaInicio(double Final);
 	    void setFechaFinal(double Inicio);
@@ -18,6 +19,16 @@ class Llamada{
 	    double getFechaFinal();
 	    int setIdCiudad();
 
+=======
+	    void setNumero(int );
+		void  setFechaInicio(double );
+		void  setFechaFinal(double );
+		void  setIdCiudad(int );
+		int  getNumero();
+		double  getFechaInicio();
+		double  getFechaFinal();
+		int  setIdCiudad();
+>>>>>>> Dany
 };
 
 #endif
