@@ -1,8 +1,8 @@
 #include "ciudad.h"
+#include <cstring>
 
-Ciudad::Ciudad(int IdCiudad,char[40] NameCiudad){
-	this->IdCiudad = IdCiudad;
-	this->NameCiudad = NameCiudad;
+Ciudad::Ciudad(int IdCiudad,char NameCiudad[]):IdCiudad(IdCiudad),NameCiudad(NameCiudad){
+
 }
 char* Ciudad::getNameCiudad(){
 	return NameCiudad;
@@ -10,8 +10,8 @@ char* Ciudad::getNameCiudad(){
 int Ciudad::getIdCiudad(){
 	return IdCiudad;
 }
-void Ciudad::setNameCiudad(char[40] NameCiudad){
-	this->NameCiudad = Nameciudad;
+void Ciudad::setNameCiudad(char* NameCiudad){
+	this->NameCiudad = NameCiudad;
 }
 void Ciudad::setIdCiudad(int IdCiudad){
 	this->IdCiudad = IdCiudad;

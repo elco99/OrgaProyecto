@@ -4,11 +4,11 @@ using namespace std;
 
 class Ciudad{
 	int IdCiudad;
-	char[40] NameCiudad; 
+	char* NameCiudad; 
 public:
-	Ciudad(int,char[40]);
-	char* getCiudad();
+	Ciudad(int, char[]);
+	char* getNameCiudad();
 	int getIdCiudad();
-	void setCiudad(char[40]);
+	void setNameCiudad(char*);
 	void setIdCiudad(int);
 };
