@@ -14,6 +14,7 @@ using namespace std;
 
 string GenerarId();
 string GenerarIdCiudad();
+string GenerarTelefono();
 
 int main(int argc, char* argv[]){
 	srand(time(0));
@@ -36,6 +37,15 @@ string GenerarIdCiudad(){
 	srand(time(0));
 	stringstream ko;
 	ko << rand() % 10 << rand() % 10<< rand() % 10<< rand() % 10 ;
+	id  = ko.str();
+	return id;
+}
+
+string GenerarTelefono(){
+	string id;
+	srand(time(0));
+	stringstream ko;
+	ko << rand() % 10 << rand() % 10<< rand() % 10<< rand() % 10<< rand() % 10 << rand() % 10<< rand() % 10<< rand() % 10 ;
 	id  = ko.str();
 	return id;
 }
