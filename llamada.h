@@ -1,34 +1,24 @@
 #ifndef LLAMADA_H
 #define LLAMADA_H
 #include <cstring>
+#include <string>
+using namespace std;
 class Llamada{
 	protected:
-		int Numero;
+		string Numero;
 		double FechaInicio;
 		double FechaFinal;
-		int IdCiudad;
+		string IdCiudad;
 	public:
-		Llamada(int, double, double, int);
-<<<<<<< HEAD
-	    void setNumero(int Id);
+		Llamada(string, double, double, string);
+	    void setNumero(string Id);
 	    void setFechaInicio(double Final);
 	    void setFechaFinal(double Inicio);
-	    void setIdCiudad(int IdCiudad);
-	    int getNumero();
+	    void setIdCiudad(string IdCiudad);
+	    string getNumero();
 	    double getFechaInicio();
 	    double getFechaFinal();
-	    int setIdCiudad();
-
-=======
-	    void setNumero(int );
-		void  setFechaInicio(double );
-		void  setFechaFinal(double );
-		void  setIdCiudad(int );
-		int  getNumero();
-		double  getFechaInicio();
-		double  getFechaFinal();
-		int  setIdCiudad();
->>>>>>> Dany
+	    string setIdCiudad();
 };
 
 #endif

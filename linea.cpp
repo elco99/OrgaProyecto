@@ -1,17 +1,17 @@
 #include "linea.h"
 
-Linea::Linea(int Id, char Numero[]):Id(Id),Numero(Numero){
+Linea::Linea(string Id, char Numero[]):Id(Id),Numero(Numero){
 
 }
 char* Linea::getNumero(){
 	return Numero;
 }
-int Linea::getId(){
+string Linea::getId(){
 	return Id;
 }
 void Linea::setNumero(char* Numero){
 	this-> Numero = Numero;
 }
-void Linea::setId(int Id){
+void Linea::setId(string Id){
 	this-> Id = Id;
 }

@@ -1,14 +1,14 @@
 #pragma once
-
+#include <string>
 using namespace std;
 
 class Ciudad{
-	int IdCiudad;
+	string IdCiudad;
 	char* NameCiudad; 
 public:
-	Ciudad(int, char[]);
+	Ciudad(string, char[]);
 	char* getNameCiudad();
-	int getIdCiudad();
+	string getIdCiudad();
 	void setNameCiudad(char*);
-	void setIdCiudad(int);
+	void setIdCiudad(string);
 };

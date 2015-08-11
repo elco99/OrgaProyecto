@@ -3,13 +3,13 @@
 #include <string.h>
 using namespace std;
     
-Cliente::Cliente(int Id, char Name[],char Gender,int IdCiudad){
+Cliente::Cliente(string Id, char Name[],char Gender,string IdCiudad){
     this -> Id = Id;
     this -> Name = Name;
     this -> Gender = Gender;
     this -> IdCiudad = IdCiudad;    
 }
-void Cliente::setId(int Id){
+void Cliente::setId(string Id){
     this -> Id = Id;
 }
 
@@ -21,11 +21,11 @@ void Cliente::setGender(char Gender){
     this -> Gender = Gender;
 }
 
-void Cliente::setIdCiudad(int IdCiudad){
+void Cliente::setIdCiudad(string IdCiudad){
     this -> IdCiudad = IdCiudad;
 }
 
-int Cliente::getId(){
+string Cliente::getId(){
     return Id;
 }
 
@@ -37,6 +37,6 @@ char Cliente::getGender(){
     return Gender;
 }
 
-int Cliente::setIdCiudad(){
+string Cliente::setIdCiudad(){
     return IdCiudad;
 }

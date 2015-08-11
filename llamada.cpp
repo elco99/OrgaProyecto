@@ -3,14 +3,14 @@
 #include <string.h>
 using namespace std;
     
-Llamada::Llamada(int Numero, double FechaInicio, double FechaFinal, int IdCiudad){
+Llamada::Llamada(string Numero, double FechaInicio, double FechaFinal, string IdCiudad){
     this -> Numero = Numero;
     this -> FechaInicio = FechaInicio;
     this -> FechaFinal = FechaFinal;
     this -> IdCiudad = IdCiudad;   
 }
 
-void Llamada::setNumero(int Numero){
+void Llamada::setNumero(string Numero){
     this -> Numero = Numero;
 }
 
@@ -22,11 +22,11 @@ void Llamada::setFechaFinal(double FechaFinal){
     this -> FechaFinal = FechaFinal;
 }
 
-void Llamada::setIdCiudad(int IdCiudad){
+void Llamada::setIdCiudad(string IdCiudad){
     this -> IdCiudad = IdCiudad;
 }
 
-int Llamada::getNumero(){
+string Llamada::getNumero(){
     return Numero;
 }
 
@@ -38,6 +38,6 @@ double Llamada::getFechaFinal(){
     return FechaFinal;
 }
 
-int Llamada::setIdCiudad(){
+string Llamada::setIdCiudad(){
     return IdCiudad;
 }

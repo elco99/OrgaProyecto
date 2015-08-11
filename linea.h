@@ -1,15 +1,15 @@
 #pragma once
 #include <cstring>
-
+#include <string>
 using namespace std;
 
 class Linea{
-	int Id;
+	string Id;
 	char* Numero; 
 public:
-	Linea(int, char[]);
+	Linea(string, char[]);
 	char* getNumero();
-	int getId();
+	string getId();
 	void setNumero(char*);
-	void setId(int);
+	void setId(string);
 };

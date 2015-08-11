@@ -1,24 +1,25 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
-#include <cstring>
+#include <string>
+using namespace std;
 class Cliente{
   protected:
-    int Id;
+    string Id;
     char* Name;
     char Gender;
-    int IdCiudad;
+    string IdCiudad;
 
 
   public:
-    Cliente(int, char [] ,char,int);
-    void setId(int Id);
+    Cliente(string, char [] ,char,string);
+    void setId(string Id);
     void setName(char* Name);
     void setGender(char Gender);
-    void setIdCiudad(int IdCiudad);
-    int getId();
+    void setIdCiudad(string IdCiudad);
+    string getId();
     char* getName();
     char getGender();
-    int setIdCiudad();
+    string setIdCiudad();
 };
 
 #endif
