@@ -12,18 +12,6 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-int main(int argc, char* argv[]){
-	srand(time(0));
-	for (int i = 0; i < 5; ++i)
-	{
-		stringstream ko;
-		ko << rand() % 10 << rand() % 10<< rand() % 10<< rand() % 10 << (rand() % 98 + 1900) << (rand() % 90000+10000);
-		cout << ko.str() << endl;
-	}
-	return 0;
-}
-=======
 string GenerarId();
 string GenerarIdCiudad();
 
@@ -51,4 +39,3 @@ string GenerarIdCiudad(){
 	id  = ko.str();
 	return id;
 }
->>>>>>> Dany
