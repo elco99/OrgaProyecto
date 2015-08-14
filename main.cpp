@@ -61,7 +61,7 @@ string GenerarTelefono(){
 	return id;
 }
 void CityToBinary(){
-	ifstream file("CiudadDavid.txt");
+	ifstream file("Ciudad.txt");
 	ofstream outputFile("Ciudades.bin");
 	while(!file.eof()){
 		char IdCiudad[4];
@@ -92,7 +92,7 @@ void CityToBinary(){
 	readFile.close();
 }
 void ClientToBinary(){
-	ifstream file("ClientesDavid.txt");
+	ifstream file("Clientes.txt");
 	ofstream outputFile("Clientes.bin");
 	while(!file.eof()){
 		char IdClient[14];
@@ -141,7 +141,7 @@ void ClientToBinary(){
 }
 
 void CallToBinary(){
-	ifstream file("LlamadasDavid.txt");
+	ifstream file("Llamadas.txt");
 	ofstream outputFile("Llamadas.bin");
 	while(!file.eof()){
 		char Numero[9];
@@ -189,7 +189,7 @@ void CallToBinary(){
 	readFile.close();
 }
 void NumberToBinary(){
-	ifstream file("NumeroDavid.txt");
+	ifstream file("Numero.txt");
 	ofstream outputFile("Numeros.bin");
 	while(!file.eof()){
 		char Numero[9];
