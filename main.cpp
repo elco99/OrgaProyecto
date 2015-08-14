@@ -26,51 +26,10 @@ int main(int argc, char* argv[]){
 
 	vector <Cliente*> clientes;
 	srand(time(0));
+	CityToBinary();
+	ClientToBinary();
 	CallToBinary();
-	/*ifstream file("CiudadDavid.txt");
-	ofstream outputFile("Ciudades.bin");
-	while(!file.eof()){
-		char IdCiudad[3];
-		char NameCiudad[40];
-		string temp = "", temp1 = "";
-		getline(file, temp, ',');
-		getline(file, temp1, ',');
-		cout<< "entro1"<< endl;
-		for (int i = 0; i < 3; ++i){
-			IdCiudad[i] = temp[i];
-		}		
-		for (int i = 0; i < 40; ++i){
-			NameCiudad[i] = temp1[i];
-		}
-		cout<< "entro2"<<endl;
-		outputFile.write((char*)IdCiudad, sizeof(IdCiudad));
-		outputFile.write((char*)NameCiudad, sizeof(NameCiudad));
-		cout<< "entro3"<<endl;
-	}	
-	file.close();
-	outputFile.close();
-	ifstream readFile("Ciudades.bin",ios::binary);
-	readFile.seekg(0);
-	while(!readFile.eof()){
-		char IdCiudad[3];
-		char NameCiudad[40];
-		readFile.read((char*)IdCiudad, sizeof(IdCiudad));
-		readFile.read((char*)NameCiudad, sizeof(NameCiudad));
-		cout <<sizeof(IdCiudad) << "  " << IdCiudad <<endl;
-
-	}
-	readFile.close();
-	/*ifstream readfile("Ciudades.bin",ios::binary);
-  	readfile.seekg(0);
-  	file.write(data, 100);
-	while(!readfile.eof()){		
-		char IdCiudad[3];
-		char NameCiudad[40];
-		readfile.read(IdCiudad, 3);
-		readfile.read(NameCiudad, 40);
-		cout << IdCiudad  << " || " << NameCiudad << endl;
-	}
-	readfile.close();*/
+	NumberToBinary();	
 	return 0;
 }
 
@@ -256,7 +215,7 @@ void NumberToBinary(){
 		char Id[14];
 		readFile.read((char*)Numero, sizeof(Numero));
 		readFile.read((char*)Id, sizeof(Id));
-		cout <<IdCiudad << " | " << NameCiudad << endl;
+		cout <<Numero << " | " << Id << endl;
 
 	}
 	readFile.close();
