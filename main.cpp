@@ -20,6 +20,7 @@ void CallToBinary();
 void NumberToBinary();
 void IndexCity();
 void IndexClient();
+void IndexNumber();
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
@@ -337,6 +338,56 @@ void IndexClient(){
 	for (int i = 0; i < indexClientKey.size(); ++i)
 	{
 		cout << "Key: " << indexClientKey.at(i) << " RRN: " << indexClientRRN.at(i)<< endl;
+	}	*/
+	readFile.close();
+}
+void IndexNumber(){
+	indexNumberKey.clear();
+	indexNumberRRN.clear();
+	ifstream readFile("Numeros.bin",ios::binary);
+	readFile.seekg(HeaderSize);
+	int cont = 0;
+
+ 	while(true){
+		stringstream rrn ;
+		if(readFile.eof())
+			break;
+		char Numero[9];
+		char Id[14];
+		readFile.read(reinterpret_cast<char*>(&Numero), sizeof(Numero));
+		readFile.read((char*)Id, sizeof(Id));
+		bool iguales = false;
+		for (int i = 0; i < sizeof(Numero)-1; ++i){
+			if(Numero[i] == '*'){
+				iguales = true;	
+				break;			
+			}
+		}
+		if(!iguales){
+			stringstream ss;
+			for (int i = 0; i < sizeof(Numero); ++i){							
+				ss<< Numero[i];	
+			}
+			//cout << ss.str()<<endl;
+			rrn<< cont;
+			//cout << rrn.str() << "|||"<< endl;
+			int key = atoi(ss.str().c_str());
+			int position = PosicionIngresoOrdenadoAlIndice(indexNumberKey, key);
+			if (position == -1){
+				indexNumberKey.push_back(ss.str());
+				indexNumberRRN.push_back( rrn.str());
+			}else{
+				indexNumberKey.insert(indexNumberKey.begin() + position, ss.str());
+				indexNumberRRN.insert(indexNumberRRN.begin() + position, rrn.str());
+			}
+
+		}
+		cont++;
+
+	}
+	/*for (int i = 0; i < indexNumberKey.size(); ++i)
+	{
+		cout << "Key: " << indexNumberKey.at(i) << " RRN: " << indexNumberRRN.at(i)<< endl;
 	}	*/
 	readFile.close();
 }
