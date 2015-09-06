@@ -16,6 +16,7 @@ string GenerarIdCiudad();
 string GenerarTelefono();
 void CityToBinary();
 void ClientToBinary();
+void CallToBinary();
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 
 int main(int argc, char* argv[]){
@@ -134,4 +135,59 @@ void ClientToBinary(){
 	file.close();
 	outputFile.close();
 	//ListClient();
+}
+void CallToBinary(){
+	ifstream file("Llamadas.txt");
+	ofstream outputFile("Llamadas.bin");
+	int rrn=-1, recordNumber = 0;
+	bool indexFlag = 0;
+	outputFile.write( reinterpret_cast<char*>(&rrn), sizeof(int) );
+	outputFile.write( reinterpret_cast<char*>(&recordNumber), sizeof(int) );
+	outputFile.write( reinterpret_cast<char*>(&indexFlag), sizeof(bool)  );
+	int Id;
+	char Numero[9];
+	char FechaInicio[20];
+	char FechaFinal[20];
+	char NumDestino[9];
+	while(true){
+		if (file.eof())
+			break;
+		
+		string temp1 = "", temp2 = "",temp3 = "",temp4 = "",temp5 = "";
+		getline(file, temp1, ',');
+		getline(file, temp2, ',');
+		getline(file, temp3, ',');
+		getline(file, temp4, ',');
+		getline(file, temp5, ',');
+		stringstream ss;
+		for (int i = 0; i < sizeof(temp1); ++i){
+			ss << temp1[i];
+		}
+		Id = atoi(ss.str().c_str());
+		for (int i = 0; i < sizeof(Numero); ++i){
+			Numero[i] = temp2[i];
+		}		
+		for (int i = 0; i < sizeof(FechaInicio); ++i){
+			FechaInicio[i] = temp3[i];
+		}
+		for (int i = 0; i <  sizeof(FechaFinal); ++i){
+			FechaFinal[i] = temp4[i];
+		}		
+		for (int i = 0; i <  sizeof(NumDestino); ++i){
+			NumDestino[i] = temp5[i];
+		}
+		//cout << temp1 <<" | "<<Numero << " | " << FechaInicio << " | " << FechaFinal << " | " << NumDestino <<endl;
+		outputFile.write(reinterpret_cast<char*>(&Id), sizeof(Id));
+		outputFile.write((char*)Numero, sizeof(Numero));
+		outputFile.write((char*)FechaInicio, sizeof(FechaInicio));
+		outputFile.write((char*)FechaFinal, sizeof(FechaFinal));
+		outputFile.write((char*)NumDestino, sizeof(NumDestino));
+		recordNumber++;
+  		outputFile.seekp (sizeof(rrn));
+  		outputFile.write(reinterpret_cast<char*>(&recordNumber), sizeof(recordNumber));
+  		outputFile.seekp(sizeof(int)*2 +1 +(recordNumber*62));
+	}	
+	file.close();
+	outputFile.close();
+	//ListCall();
 }
