@@ -28,6 +28,7 @@ int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 void agregarCity();
 void agregarClient();
+void agregarNumero();
 
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
@@ -743,6 +744,67 @@ void agregarClient(){
 		writeFile.write(reinterpret_cast<char*>(&NameClient), sizeof(NameClient));
 		writeFile.write(reinterpret_cast<char*>(&Gender), sizeof(Gender));
 		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+		writeFile.close();
+	}
+}
+void agregarNumero(){
+	ifstream readFile("Numeros.bin", ios::binary);
+	char Numero[9];
+	char Id[14];
+	readFile.seekg(0);
+	int rrnHeader, recordNumber,cont = 0;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.read(reinterpret_cast<char*>(&recordNumber), sizeof(int));
+	readFile.seekg(HeaderSize + rrnHeader*( sizeof(Numero) + sizeof(Id) )+ sizeof(Numero) );
+	readFile.read(reinterpret_cast<char*>(&Id), sizeof(Id));
+	stringstream streamNombre;
+	for (int i = 0; i < sizeof(Id); ++i){
+		streamNombre << Id[i];
+	}
+	int newRRNHeader = atoi(streamNombre.str().c_str());
+	readFile.close();
+	string leerId = "", leerDato = "";
+	if(rrnHeader != -1){
+		cout << "Ingrese el numero: ";
+		cin >> leerDato;
+		stringstream ss;
+		for (int i = 0; i < sizeof(Numero); ++i){
+			Numero[i] = leerDato[i];
+			ss<< leerDato[i];
+		}
+		
+		cout << "Ingrese id del cliente que posee este numero: ";
+		cin >> leerId;
+		for (int i = 0; i < sizeof(Id); ++i){
+			Id[i] = leerId[i];
+		}
+		ofstream writeFile("Numeros.bin", ofstream::in | ofstream :: out);
+		writeFile.seekp(HeaderSize + rrnHeader*( sizeof(Numero) + sizeof(Id) )  );
+		writeFile.write(reinterpret_cast<char*>(&Numero), sizeof(Numero));
+		writeFile.write(reinterpret_cast<char*>(&Id), sizeof(Id));
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&newRRNHeader), sizeof(newRRNHeader));
+		writeFile.close();
+		int position = PosicionIngresoOrdenadoAlIndice( indexNumberKey  , atoi(ss.str().c_str()) );
+		indexNumberKey.insert(indexNumberKey.begin()+ position, ss.str());
+	}else{
+		cout << "Ingrese el numero: ";
+		cin >> leerDato;
+		stringstream ss;
+		for (int i = 0; i < sizeof(Numero); ++i){
+			Numero[i] = leerDato[i];
+			ss<< leerDato[i];
+		}
+		
+		cout << "Ingrese id del cliente que posee este numero: ";
+		cin >> leerId;
+		for (int i = 0; i < sizeof(Id); ++i){
+			Id[i] = leerId[i];
+		}
+		ofstream writeFile("Numeros.bin", ofstream::in | ofstream::out);
+		writeFile.seekp(HeaderSize + recordNumber*( sizeof(Numero) + sizeof(Id)) );
+		writeFile.write(reinterpret_cast<char*>(&Numero), sizeof(Numero));
+		writeFile.write(reinterpret_cast<char*>(&Id), sizeof(Id));
 		writeFile.close();
 	}
 }
