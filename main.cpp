@@ -22,6 +22,7 @@ void IndexCity();
 void IndexClient();
 void IndexNumber();
 void borrarCity( int );
+void borrarClient( long );
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
@@ -522,5 +523,36 @@ void borrarCity( int key ){
 	}
 	indexCityKey.erase(indexCityKey.begin() +position);
 	indexCityRRN.erase(indexCityRRN.begin() +position);
+	writeFile.close();
+}
+void borrarClient( long key ){
+	char IdClient[14];
+	char NameClient[40];
+	char Gender[2];
+	char IdCiudad[4];
+	int position = PosicionIngresoOrdenadoAlIndiceLong(indexClientKey, key);
+	string rrn = indexClientRRN.at(position);
+	int rrnInteger = atoi(rrn.c_str());
+	stringstream rrnToString;
+	ifstream readFile("Clientes.bin", ios::binary);
+	readFile.seekg(0);
+	int rrnHeader;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.close();
+	ofstream writeFile("Clientes.bin", ios::out | ios::in);
+	if (position != -1){
+		IdClient[0] ='*';
+		rrnToString<< rrnHeader;
+		for (int i = 0; i < rrnToString.str().size(); ++i){
+			NameClient[i] = rrnToString.str()[i];
+		}
+		writeFile.seekp(HeaderSize + atoi((rrn).c_str())*( sizeof(IdClient) + sizeof(NameClient) + sizeof(Gender) + sizeof(IdCiudad))  );
+		writeFile.write(reinterpret_cast<char*>(&IdClient), sizeof(IdClient) );
+		writeFile.write(reinterpret_cast<char*>(&NameClient), sizeof(NameClient) );// se escribe el rrn en el header
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&rrnInteger), sizeof(rrnInteger));
+	}
+	indexClientKey.erase(indexClientKey.begin() +position);
+	indexClientRRN.erase(indexClientRRN.begin() +position);
 	writeFile.close();
 }
