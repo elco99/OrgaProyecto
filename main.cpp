@@ -26,6 +26,8 @@ void borrarClient( long );
 void borrarNumber( int );
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
+void agregarCity();
+
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -588,4 +590,65 @@ void borrarNumber( int key ){
 	indexNumberKey.erase(indexNumberKey.begin() +position);
 	indexNumberRRN.erase(indexNumberRRN.begin() +position);
 	writeFile.close();
+}
+void agregarCity(){
+	ifstream readFile("Ciudades.bin", ios::binary);
+	char IdCiudad[4];
+	char NameCiudad[40];
+	readFile.seekg(0);
+	int rrnHeader, recordNumber,cont = 0;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.read(reinterpret_cast<char*>(&recordNumber), sizeof(int));
+	readFile.seekg(HeaderSize + rrnHeader*( sizeof(IdCiudad) + sizeof(NameCiudad) )+ sizeof(IdCiudad) );
+	readFile.read(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+	stringstream streamNombre;
+	for (int i = 0; i < sizeof(NameCiudad); ++i){
+		streamNombre << NameCiudad[i];
+	}
+	int newRRNHeader = atoi(streamNombre.str().c_str());
+	readFile.close();
+	string leerId = "", leerDato = "";
+	if(rrnHeader != -1){
+		cout << "Ingrese el Id de la ciudad: ";
+		cin >> leerId;
+		stringstream ss;
+		for (int i = 0; i < sizeof(IdCiudad); ++i){
+			IdCiudad[i] = leerId[i];
+			ss<< leerId[i];
+		}
+		cout << "Ingrese el nombre de la ciudad: ";
+		cin >> leerDato;
+		for (int i = 0; i < sizeof(NameCiudad); ++i){
+			NameCiudad[i] = leerDato[i];
+		}
+		ofstream writeFile("Ciudades.bin", ofstream::in | ofstream :: out);
+		writeFile.seekp(HeaderSize + rrnHeader*( sizeof(IdCiudad) + sizeof(NameCiudad) )  );
+		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+		writeFile.write(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&newRRNHeader), sizeof(newRRNHeader));
+		writeFile.close();
+		int position = PosicionIngresoOrdenadoAlIndice( indexCityKey  , atoi(ss.str().c_str()) );
+		indexCityKey.insert(indexCityKey.begin()+ position, ss.str());
+	}else{
+		cout << "Ingrese el Id de la ciudad: ";
+		cin >> leerId;
+		stringstream streamId;
+		for (int i = 0; i < sizeof(IdCiudad); ++i){
+			IdCiudad[i] = leerId[i];
+			streamId<< leerId[i];
+		}
+
+		cout << "Ingrese el nombre de la ciudad: ";
+		cin >> leerDato;
+		for (int i = 0; i < sizeof(NameCiudad); ++i){
+			NameCiudad[i] = leerDato[i];
+		}
+		stringstream ss;
+		ofstream writeFile("Ciudades.bin", ofstream::in | ofstream::out);
+		writeFile.seekp(HeaderSize + recordNumber*( sizeof(IdCiudad) + sizeof(NameCiudad)) );
+		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+		writeFile.write(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+		writeFile.close();
+	}
 }
