@@ -19,7 +19,9 @@ void ClientToBinary();
 void CallToBinary();
 void NumberToBinary();
 void IndexCity();
+void IndexClient();
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
+int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -284,6 +286,60 @@ void IndexCity(){
 	//writeIndex(indexCityKey,indexCityRRN, "IdenxCity.bin", "Ciudades.bin");
 	//ListIndex("IndexCity.bin");
 }
+void IndexClient(){
+	indexClientKey.clear();
+	indexClientKey.clear();
+	ifstream readFile("Clientes.bin",ios::binary);
+	readFile.seekg(sizeof(int)+sizeof(int)+sizeof(bool));
+	int cont = 0;
+
+ 	while(true){
+		stringstream rrn ;
+		if(readFile.eof())
+			break;
+		char IdClient[14];
+		char NameClient[40];
+		char Gender[2];
+		char IdCiudad[4];
+		readFile.read((char*)IdClient, sizeof(IdClient));
+		readFile.read((char*)NameClient, sizeof(NameClient));
+		readFile.read((char*)Gender, sizeof(Gender));
+		readFile.read((char*)IdCiudad, sizeof(IdCiudad));
+		bool iguales = false;
+		for (int i = 0; i < sizeof(IdClient)-1; ++i)
+		{
+			if(IdClient[i] == '*'){
+				iguales = true;	
+				break;			
+			}
+		}
+		if(!iguales){
+			stringstream ss;
+			for (int i = 0; i < sizeof(IdClient); ++i)
+			{							
+				ss<< IdClient[i];	
+			}
+			rrn<< cont;
+			unsigned long key = atol(ss.str().c_str());
+			int position = PosicionIngresoOrdenadoAlIndiceLong(indexClientKey, key);
+			if (position == -1){
+				indexClientKey.push_back(ss.str());
+				indexClientRRN.push_back( rrn.str());
+			}else{
+				indexClientKey.insert(indexClientKey.begin() + position, ss.str());
+				indexClientRRN.insert(indexClientRRN.begin() + position, rrn.str());
+			}
+
+		}
+		cont++;
+
+	}/*
+	for (int i = 0; i < indexClientKey.size(); ++i)
+	{
+		cout << "Key: " << indexClientKey.at(i) << " RRN: " << indexClientRRN.at(i)<< endl;
+	}	*/
+	readFile.close();
+}
 int PosicionIngresoOrdenadoAlIndice(vector<string> indexKey  , int key){
     int low = 0;
     int high = indexKey.size() - 1;
@@ -324,6 +380,56 @@ int PosicionIngresoOrdenadoAlIndice(vector<string> indexKey  , int key){
     			}
     		}else{
     			if(key < atoi((indexKey.at(mid)).c_str())){
+    				return mid;
+    			}else{
+    				return mid+1;
+    			}
+
+    		}
+    	}
+    }
+    return -1;
+}
+int PosicionIngresoOrdenadoAlIndiceLong(vector<string> indexKey  , unsigned long key){
+    int low = 0;
+    int high = indexKey.size() - 1;
+    int mid;
+    bool avoidInfiniteCicle = false;
+    
+    while(true){
+    	if(low > high)
+    		break;    	
+    	mid = (low + high)/2;
+    	if(key == atol((indexKey.at(mid)).c_str()) )
+    		return mid;
+    	if(key > atol((indexKey.at(mid)).c_str())){
+    		if(mid != indexKey.size() - 1){
+    			if(key < atol((indexKey.at(mid+1)).c_str())){
+    				return mid+1;
+    			}else{
+    				if(avoidInfiniteCicle && mid == indexKey.size()-2)
+    					return -1;
+    				low = mid;
+    				avoidInfiniteCicle = true;
+    			}
+    		}else{
+    			if(key < atol((indexKey.at(mid)).c_str())){
+    				return mid;
+    			}else{
+    				return -1;
+    			}
+
+    		}
+    	}else{
+    		if(mid != 0){
+    			if(key > atol((indexKey.at(mid-1)).c_str())){
+
+    				return mid;
+    			}else{
+    				high = mid;
+    			}
+    		}else{
+    			if(key < atol((indexKey.at(mid)).c_str())){
     				return mid;
     			}else{
     				return mid+1;
