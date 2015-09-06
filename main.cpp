@@ -18,7 +18,15 @@ void CityToBinary();
 void ClientToBinary();
 void CallToBinary();
 void NumberToBinary();
+void IndexCity();
+int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
+vector<string> indexCityRRN;
+vector<string> indexCityKey;
+vector<string> indexClientKey;
+vector<string> indexClientRRN;
+vector<string> indexNumberRRN;
+vector<string> indexNumberKey;
 
 int main(int argc, char* argv[]){
 
@@ -224,4 +232,105 @@ void NumberToBinary(){
 	file.close();
 	outputFile.close();
 	//ListNumber();
+}
+void IndexCity(){
+	indexCityKey.clear();
+	indexCityRRN.clear();
+	ifstream readFile("Ciudades.bin",ios::binary);
+	readFile.seekg(HeaderSize);
+	int cont = 0;
+
+ 	while(true){
+		stringstream rrn ;
+		if(readFile.eof()){
+			break;
+		}
+		char IdCiudad[4];
+		char NameCiudad[40];
+		readFile.read(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+		readFile.read(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+		bool iguales = false;
+		for (int i = 0; i < sizeof(IdCiudad)-1; ++i){
+			if(IdCiudad[i] == '*'){
+				iguales = true;	
+				break;			
+			}
+		}
+		if(!iguales){
+			stringstream ss;
+			for (int i = 0; i < sizeof(IdCiudad); ++i){							
+				ss<< IdCiudad[i];	
+			}
+			rrn<< cont;
+			int key = atoi(ss.str().c_str());
+			int position = PosicionIngresoOrdenadoAlIndice(indexCityKey, key);
+			if (position == -1){
+				indexCityKey.push_back(ss.str());
+				indexCityRRN.push_back(rrn.str());
+			}else{
+				indexCityKey.insert(indexCityKey.begin() + position, ss.str());
+				indexCityRRN.insert(indexCityRRN.begin() + position, rrn.str());
+			}
+
+		}
+		cont++;
+
+	}
+	/*for (int i = 0; i < indexCityKey.size(); ++i)
+	{
+		cout << "Key: " << indexCityKey.at(i) << " RRN: " << indexCityRRN.at(i)<< endl;
+	}	*/
+	readFile.close();
+	//writeIndex(indexCityKey,indexCityRRN, "IdenxCity.bin", "Ciudades.bin");
+	//ListIndex("IndexCity.bin");
+}
+int PosicionIngresoOrdenadoAlIndice(vector<string> indexKey  , int key){
+    int low = 0;
+    int high = indexKey.size() - 1;
+    int mid;
+    bool avoidInfiniteCicle = false;
+    
+    while(true){
+    	if(low > high)
+    		break;    	
+    	mid = (low + high)/2;
+    	if(key == atoi((indexKey.at(mid)).c_str()) )
+    		return mid;
+    	if(key > atoi((indexKey.at(mid)).c_str())){
+    		if(mid != indexKey.size() - 1){
+    			if(key < atoi((indexKey.at(mid+1)).c_str())){
+    				return mid+1;
+    			}else{
+    				if(avoidInfiniteCicle && mid == indexKey.size()-2)
+    					return -1;
+    				low = mid;
+    				avoidInfiniteCicle = true;
+    			}
+    		}else{
+    			if(key < atoi((indexKey.at(mid)).c_str())){
+    				return mid;
+    			}else{
+    				return -1;
+    			}
+
+    		}
+    	}else{
+    		if(mid != 0){
+    			if(key > atoi((indexKey.at(mid-1)).c_str())){
+
+    				return mid;
+    			}else{
+    				high = mid;
+    			}
+    		}else{
+    			if(key < atoi((indexKey.at(mid)).c_str())){
+    				return mid;
+    			}else{
+    				return mid+1;
+    			}
+
+    		}
+    	}
+    }
+    return -1;
 }
