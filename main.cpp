@@ -21,6 +21,7 @@ void NumberToBinary();
 void IndexCity();
 void IndexClient();
 void IndexNumber();
+void borrarCity( int );
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
@@ -490,4 +491,36 @@ int PosicionIngresoOrdenadoAlIndiceLong(vector<string> indexKey  , unsigned long
     	}
     }
     return -1;
+}
+void borrarCity( int key ){
+	char IdCiudad[4];
+	char NameCiudad[40];
+	
+	int position = PosicionIngresoOrdenadoAlIndice(indexCityKey, key);
+	string rrn = indexCityRRN.at(position);
+	int rrnInteger = atoi(rrn.c_str());
+	stringstream rrnToString;
+	ifstream readFile("Ciudades.bin", ios::binary);
+	readFile.seekg(0);
+	int rrnHeader;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.close();
+	ofstream writeFile("Ciudades.bin", ios::out | ios::in);
+	if (position != -1){
+		IdCiudad[0] ='*';
+		rrnToString<< rrnHeader;
+		for (int i = 0; i < rrnToString.str().size(); ++i)
+		{
+
+			NameCiudad[i] = rrnToString.str()[i];
+		}
+		writeFile.seekp(HeaderSize + atoi((rrn).c_str())*( sizeof(IdCiudad) + sizeof(NameCiudad) )  );
+		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad) );
+		writeFile.write(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad) );// se escribe el rrn en el header
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&rrnInteger), sizeof(rrnInteger));
+	}
+	indexCityKey.erase(indexCityKey.begin() +position);
+	indexCityRRN.erase(indexCityRRN.begin() +position);
+	writeFile.close();
 }
