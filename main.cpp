@@ -17,6 +17,7 @@ string GenerarTelefono();
 void CityToBinary();
 void ClientToBinary();
 void CallToBinary();
+void NumberToBinary();
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 
 int main(int argc, char* argv[]){
@@ -190,4 +191,37 @@ void CallToBinary(){
 	file.close();
 	outputFile.close();
 	//ListCall();
+}
+void NumberToBinary(){
+	ifstream file("Numero.txt");
+	ofstream outputFile("Numeros.bin");
+	int rrn=-1, recordNumber = 0;
+	bool indexFlag = 0;
+	outputFile.write( reinterpret_cast<char*>(&rrn), sizeof(int) );
+	outputFile.write( reinterpret_cast<char*>(&recordNumber), sizeof(int) );
+	outputFile.write( reinterpret_cast<char*>(&indexFlag), sizeof(bool)  );
+	while(true){
+		if(file.eof())
+			break;
+		char Numero[9];
+		char Id[14];
+		string temp = "", temp1 = "";
+		getline(file, temp, ',');
+		getline(file, temp1, ',');
+		for (int i = 0; i < sizeof(Numero); ++i){
+			Numero[i] = temp[i];
+		}		
+		for (int i = 0; i < sizeof(Id); ++i){
+			Id[i] = temp1[i];
+		}
+		outputFile.write((char*)Numero, sizeof(Numero));
+		outputFile.write((char*)Id, sizeof(Id));
+		recordNumber++;
+  		outputFile.seekp (sizeof(rrn));
+  		outputFile.write(reinterpret_cast<char*>(&recordNumber), sizeof(recordNumber));
+  		outputFile.seekp(sizeof(int)*2 +1 +(recordNumber*23));
+	}	
+	file.close();
+	outputFile.close();
+	//ListNumber();
 }
