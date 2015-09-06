@@ -27,6 +27,7 @@ void borrarNumber( int );
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 void agregarCity();
+void agregarClient();
 
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
@@ -649,6 +650,99 @@ void agregarCity(){
 		writeFile.seekp(HeaderSize + recordNumber*( sizeof(IdCiudad) + sizeof(NameCiudad)) );
 		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
 		writeFile.write(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+		writeFile.close();
+	}
+}
+void agregarClient(){
+	ifstream readFile("Clientes.bin", ios::binary);
+	char IdClient[14];
+	char NameClient[40];
+	char Gender[2];
+	char IdCiudad[4];
+	readFile.seekg(0);
+	int rrnHeader, recordNumber,cont = 0;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.read(reinterpret_cast<char*>(&recordNumber), sizeof(int));
+	readFile.seekg(HeaderSize + rrnHeader*( sizeof(IdClient) + sizeof(NameClient) + sizeof(Gender) + sizeof(IdCiudad))+ sizeof(IdClient) );
+	readFile.read(reinterpret_cast<char*>(&NameClient), sizeof(NameClient));
+	stringstream streamNombre;
+	for (int i = 0; i < sizeof(NameClient); ++i){
+		streamNombre << NameClient[i];
+	}
+	int newRRNHeader = atoi(streamNombre.str().c_str());
+	cout << newRRNHeader << "°|°" << endl;
+	readFile.close();
+	string leerName = "",leerId = "", leerGender = "",leerCiudad = "";
+	if(rrnHeader != -1){
+		cout << "Ingrese el Id del cliente: ";
+		cin >> leerId;
+		stringstream ss;
+		for (int i = 0; i < sizeof(IdClient); ++i){
+			IdClient[i] = leerId[i];
+			ss<< leerId[i];
+		}
+		
+		cout << "Ingrese el nombre del cliente: ";
+		cin >> leerName;
+		for (int i = 0; i < sizeof(NameClient); ++i){
+			NameClient[i] = leerName[i];
+		}
+
+		cout << "Ingrese el genero del cliente: ";
+		cin >> leerGender;
+		for (int i = 0; i < sizeof(Gender); ++i){
+			Gender[i] = leerGender[i];
+		}
+
+		cout << "Ingrese la ciudad en la que el cliente vive: ";
+		cin >> leerCiudad;
+		for (int i = 0; i < sizeof(IdCiudad); ++i){
+			IdCiudad[i] = leerCiudad[i];
+		}
+
+		ofstream writeFile("Clientes.bin", ofstream::in | ofstream :: out);
+		writeFile.seekp(HeaderSize + rrnHeader*( sizeof(IdClient) + sizeof(NameClient) + sizeof(Gender) + sizeof(IdCiudad))  );
+		writeFile.write(reinterpret_cast<char*>(&IdClient), sizeof(IdClient));
+		writeFile.write(reinterpret_cast<char*>(&NameClient), sizeof(NameClient));
+		writeFile.write(reinterpret_cast<char*>(&Gender), sizeof(Gender));
+		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&newRRNHeader), sizeof(newRRNHeader));
+		writeFile.close();
+		int position = PosicionIngresoOrdenadoAlIndice( indexClientKey  , atoi(ss.str().c_str()) );
+		indexClientKey.insert(indexClientKey.begin()+ position, ss.str());
+	}else{
+		cout << "Ingrese el Id del cliente: ";
+		cin >> leerId;
+		stringstream ss;
+		for (int i = 0; i < sizeof(IdClient); ++i){
+			IdClient[i] = leerId[i];
+			ss<< leerId[i];
+		}
+		
+		cout << "Ingrese el nombre del cliente: ";
+		cin >> leerName;
+		for (int i = 0; i < sizeof(NameClient); ++i){
+			NameClient[i] = leerName[i];
+		}
+
+		cout << "Ingrese el genero del cliente: ";
+		cin >> leerGender;
+		for (int i = 0; i < sizeof(Gender); ++i){
+			Gender[i] = leerGender[i];
+		}
+
+		cout << "Ingrese la ciudad en la que el cliente vive: ";
+		cin >> leerCiudad;
+		for (int i = 0; i < sizeof(IdCiudad); ++i){
+			IdCiudad[i] = leerCiudad[i];
+		}
+		ofstream writeFile("Clientes.bin", ofstream::in | ofstream::out);
+		writeFile.seekp(HeaderSize + rrnHeader*( sizeof(IdClient) + sizeof(NameClient) + sizeof(Gender) + sizeof(IdCiudad)) );
+		writeFile.write(reinterpret_cast<char*>(&IdClient), sizeof(IdClient));
+		writeFile.write(reinterpret_cast<char*>(&NameClient), sizeof(NameClient));
+		writeFile.write(reinterpret_cast<char*>(&Gender), sizeof(Gender));
+		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
 		writeFile.close();
 	}
 }
