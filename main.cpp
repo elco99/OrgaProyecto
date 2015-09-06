@@ -23,6 +23,7 @@ void IndexClient();
 void IndexNumber();
 void borrarCity( int );
 void borrarClient( long );
+void borrarNumber( int );
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
@@ -554,5 +555,37 @@ void borrarClient( long key ){
 	}
 	indexClientKey.erase(indexClientKey.begin() +position);
 	indexClientRRN.erase(indexClientRRN.begin() +position);
+	writeFile.close();
+}
+void borrarNumber( int key ){
+	char Numero[9];
+	char Id[14];
+	
+	int position = PosicionIngresoOrdenadoAlIndice(indexNumberKey, key);
+	string rrn = indexNumberRRN.at(position);
+	int rrnInteger = atoi(rrn.c_str());
+	stringstream rrnToString;
+	ifstream readFile("Numeros.bin", ios::binary);
+	readFile.seekg(0);
+	int rrnHeader;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.close();
+	ofstream writeFile("Numeros.bin", ios::out | ios::in);
+	if (position != -1){
+		Numero[0] ='*';
+		rrnToString<< rrnHeader;
+		for (int i = 0; i < rrnToString.str().size(); ++i)
+		{
+
+			Id[i] = rrnToString.str()[i];
+		}
+		writeFile.seekp(HeaderSize + atoi((rrn).c_str())*( sizeof(Numero) + sizeof(Id) )  );
+		writeFile.write(reinterpret_cast<char*>(&Numero), sizeof(Numero) );
+		writeFile.write(reinterpret_cast<char*>(&Id), sizeof(Id) );// se escribe el rrn en el header
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&rrnInteger), sizeof(rrnInteger));
+	}
+	indexNumberKey.erase(indexNumberKey.begin() +position);
+	indexNumberRRN.erase(indexNumberRRN.begin() +position);
 	writeFile.close();
 }
