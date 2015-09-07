@@ -30,7 +30,7 @@ void agregarCity();
 void agregarClient();
 void agregarNumero();
 void modificarCity();
-
+void modificarClient();
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -837,4 +837,55 @@ void modificarCity(){
 	writeFile.close();
 	/*int position2 = PosicionIngresoOrdenadoAlIndice( indexCityKey  , atoi(ss.str().c_str()) );
 	indexCityKey.insert(indexCityKey.begin()+ position2, ss.str());*/
+}
+void modificarClient(){
+	char IdClient[14];
+	char NameClient[40];
+	char Gender[2];
+	char IdCiudad[4];
+	string leerName = "",leerId = "", leerGender = "",leerCiudad = "",key = "";
+	cout << "Ingrese la llave del cliente que desea modificar"<<endl;
+	cin >>key;
+	int position = PosicionIngresoOrdenadoAlIndiceLong(indexClientKey, atol(key.c_str()));
+	cout << "Ingrese el Id del cliente: ";
+	cin >> leerId;
+	stringstream ss;
+	for (int i = 0; i < sizeof(IdClient); ++i){
+		IdClient[i] = leerId[i];
+		ss<< leerId[i];
+	}
+	
+	cout << "Ingrese el nombre del cliente: ";
+	cin >> leerName;
+	for (int i = 0; i < sizeof(NameClient); ++i){
+		NameClient[i] = leerName[i];
+	}
+
+	cout << "Ingrese el genero del cliente: ";
+	cin >> leerGender;
+	for (int i = 0; i < sizeof(Gender); ++i){
+		Gender[i] = leerGender[i];
+	}
+
+	cout << "Ingrese la ciudad en la que el cliente vive: ";
+	cin >> leerCiudad;
+	for (int i = 0; i < sizeof(IdCiudad); ++i){
+		IdCiudad[i] = leerCiudad[i];
+	}
+	ofstream writeFile("Clientes.bin", ofstream::in | ofstream :: out);
+	int rrnModificar = atoi(indexClientRRN.at(position).c_str());
+	cout << "entro1"<<endl;
+	writeFile.seekp(HeaderSize + rrnModificar*( sizeof(IdClient) + sizeof(NameClient) + sizeof(Gender) + sizeof(IdCiudad))  );
+	cout << "entro2"<<endl;
+	writeFile.write(reinterpret_cast<char*>(&IdClient), sizeof(IdClient));
+	cout << "entro3"<<endl;
+	writeFile.write(reinterpret_cast<char*>(&NameClient), sizeof(NameClient));
+	cout << "entro4"<<endl;
+	writeFile.write(reinterpret_cast<char*>(&Gender), sizeof(Gender));
+	cout << "entro5"<<endl;
+	writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+	cout << "entro6"<<endl;
+	writeFile.close();
+	/*int position = PosicionIngresoOrdenadoAlIndice( indexClientKey  , atoi(ss.str().c_str()) );
+	indexClientKey.insert(indexClientKey.begin()+ position, ss.str());*/
 }
