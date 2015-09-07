@@ -47,7 +47,156 @@ vector<string> indexNumberRRN;
 vector<string> indexNumberKey;
 
 int main(int argc, char* argv[]){
+	srand(time(0));
+	int opcion = 0,opcionAdd = 0,opcionEliminar = 0,opcionModificar = 0,opcionListar = 0, opcionBuscar =0, opcionReindexar = 0;
+	
+	CityToBinary();
+	ClientToBinary();
+	CallToBinary();
+	NumberToBinary();
+	IndexCity();
+	IndexClient();
+	IndexNumber();
+	cout << "Archivos creados e indexados exitosamente"<<endl;
+	bool continuar = true;
+	while(continuar){
+		cout << "1. Agregar\n2. Eliminar\n3. Modificar\n4. Listar\n5. Buscar\n6. Reindexar\n7. Salir"<<endl;
+		cin >> opcion;
+		switch(opcion){
+			case 1:{//agregar
+				cout << "1. Ciudad\n2. Cliente\n3. Numero"<<endl;
+				cin >> opcionAdd;
+				switch(opcionAdd){
+					case 1:{
+						agregarCity();
+					}break;
+					case 2:{
+						agregarClient();				
+					}break;
+					case 3:{
+						agregarNumero();				
+					}break;
+				}
+			}break;//fin agregar
 
+			case 2:{//eliminar
+				cout << "1. Ciudad\n2. Cliente\n3. Numero"<<endl;
+				cin >> opcionEliminar;
+				switch(opcionEliminar){
+					case 1:{
+						int Id;
+						cout << "ingrese el Id de la ciudad que desea borrar: ";
+						cin >> Id;
+						borrarCity(Id);
+					}break;
+					case 2:{
+						long Id;
+						cout << "ingrese el Id del cliente que desea borrar: ";
+						cin >> Id;
+						borrarClient(Id);				
+					}break;
+					case 3:{
+						int Id;
+						cout << "ingrese el numero que desea borrar: ";
+						cin >> Id;
+						borrarNumber(Id);			
+					}break;
+				}
+			}break;//fin eliminar
+
+			case 3:{//modificar
+				cout << "1. Ciudad\n2. Cliente\n3. Numero"<<endl;
+				cin >> opcionModificar;
+				switch(opcionModificar){
+					case 1:{
+						modificarCity();
+					}break;
+					case 2:{
+						modificarClient();		
+					}break;
+					case 3:{
+						modificarNumber();
+					}break;
+				}
+			}break;//fin modificar
+
+			case 4:{//listar
+				cout << "1. Ciudad\n2. Cliente\n3. Numero"<<endl;
+				cin >> opcionListar;
+				switch(opcionListar){
+					case 1:{
+						ListCity();
+					}break;
+					case 2:{
+						ListClient();									
+					}break;
+					case 3:{
+						ListNumber();				
+					}break;
+				}
+			}break;//fin listar
+
+			case 5:{//buscar
+				int typeOfSearch = 0;
+				cout << "1. Busqueda Indexada\n2. Busqueda secuencial";
+				cin >> typeOfSearch;
+				cout << "1. Ciudad\n2. Cliente\n3. Numero"<<endl;
+				cin >> opcionBuscar;
+				switch(opcionBuscar){
+					case 1:{
+						cout << "Ingrese el Id de la ciudad que desea buscar: ";
+						int key;
+						cin >> key;
+						if(typeOfSearch == 0)
+							buscarCityIndexado(key);
+						else
+							buscarCity(key);
+					}break;
+					case 2:{
+						cout << "Ingrese el Id del cliente que desea buscar: ";
+						long key;
+						cin >> key;
+						if(typeOfSearch == 0)
+							buscarClientIndexado(key);
+						else
+							buscarClient(key);				
+					}break;
+					case 3:{
+						cout << "Ingrese el numero que desea buscar: ";
+						int key;
+						cin >> key;
+						if(typeOfSearch == 0)
+							buscarCityIndexado(key);
+						else
+							buscarCity(key);				
+					}break;
+				}
+			}break;//fin buscar
+
+			case 6:{//reindexar
+				cout << "1. Ciudad\n2. Cliente\n3. Numero"<<endl;
+				cin >> opcionAdd;
+				int Id;
+				switch(opcionAdd){
+					case 1:{
+						IndexCity();
+					}break;
+					case 2:{
+						IndexClient();				
+					}break;
+					case 3:{
+						IndexNumber();				
+					}break;
+				}
+			}break;//fin reindexar
+
+
+			default:{//salir
+				continuar =false;
+			}break;
+		}
+	}
+	
 	return 0;
 }
 
