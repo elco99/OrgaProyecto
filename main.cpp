@@ -31,6 +31,7 @@ void agregarClient();
 void agregarNumero();
 void modificarCity();
 void modificarClient();
+void modificarNumber();
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -888,4 +889,35 @@ void modificarClient(){
 	writeFile.close();
 	/*int position = PosicionIngresoOrdenadoAlIndice( indexClientKey  , atoi(ss.str().c_str()) );
 	indexClientKey.insert(indexClientKey.begin()+ position, ss.str());*/
+}
+void modificarNumber(){
+	char Numero[9];
+	char Id[14];
+	int cont = 0;
+	string leerId = "", leerDato = "",key = "";
+	cout << "Ingrese el numero que desea modificar"<<endl;
+	cin >>key;
+	int position = PosicionIngresoOrdenadoAlIndice(indexNumberKey, atoi(key.c_str()));
+	cout << "Ingrese el numero: ";
+	cin >> leerDato;
+	stringstream ss;
+	for (int i = 0; i < sizeof(Numero); ++i){
+		Numero[i] = leerDato[i];
+		ss<< leerDato[i];
+	}
+	
+	cout << "Ingrese id del cliente que posee este numero: ";
+	cin >> leerId;
+	for (int i = 0; i < sizeof(Id); ++i){
+		Id[i] = leerId[i];
+	}
+	
+	ofstream writeFile("Numeros.bin", ofstream::in | ofstream :: out);
+	int rrnModificar = atoi(indexNumberRRN.at(position).c_str());
+	writeFile.seekp(HeaderSize + rrnModificar*( sizeof(Numero) + sizeof(Id) )  );
+	writeFile.write(reinterpret_cast<char*>(&Numero), sizeof(Numero));
+	writeFile.write(reinterpret_cast<char*>(&Id), sizeof(Id));
+	writeFile.close();
+	/*int position2 = PosicionIngresoOrdenadoAlIndice( indexCityKey  , atoi(ss.str().c_str()) );
+	indexCityKey.insert(indexCityKey.begin()+ position2, ss.str());*/
 }
