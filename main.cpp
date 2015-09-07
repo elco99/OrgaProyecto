@@ -33,9 +33,11 @@ void modificarCity();
 void modificarClient();
 void modificarNumber();
 void buscarCityIndexado(int);
-void buscarClientIndexado(unsigned long key);
-void buscarNumberIndexado( int key);
-void buscarCity(int key);
+void buscarClientIndexado(unsigned long);
+void buscarNumberIndexado( int);
+void buscarCity(int);
+void buscarClient( int);
+void buscarNumber( unsigned long );
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -1009,6 +1011,74 @@ void buscarCity(int key){
 			encontrado = true;
 			cout << "Id Ciudad : " << IdCiudad <<endl;
 			cout << "Nombre de la ciudad: " << NameCiudad << endl;	
+			break;
+		}
+
+	}
+	if(!encontrado)
+		cout << "El registro no se encuentra entre los datos.";
+	
+	readFile.close();
+}
+void buscarClient(unsigned long key){
+	char IdClient[14];
+	char NameClient[40];
+	char Gender[2];
+	char IdCiudad[4];
+	bool encontrado = false;
+	ifstream readFile("Clientes.bin",ios::binary);
+	readFile.seekg(sizeof(int)+sizeof(int)+sizeof(bool));
+ 	while(true){
+		if(readFile.eof())
+			break;
+		readFile.read(reinterpret_cast<char*>(&IdClient), sizeof(IdClient) );
+		readFile.read(reinterpret_cast<char*>(&NameClient), sizeof(NameClient) );		
+		readFile.read(reinterpret_cast<char*>(&Gender), sizeof(Gender) );
+		readFile.read(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad) );		
+		stringstream ss;
+		for (int i = 0; i < sizeof(IdClient); ++i){							
+			ss<< IdClient[i];	
+		}
+		unsigned long keyLeida = atol(ss.str().c_str());	
+		cout << keyLeida << endl;	
+		if(keyLeida == key){
+			encontrado = true;
+			cout << "Id Cliente : " << IdClient <<endl;
+			cout << "Nombre del cliente: " << NameClient << endl;	
+			cout << "Genero: " << Gender <<endl;
+			cout << "ID Ciudad: " << IdCiudad << endl;	
+			break;
+		}
+
+	}
+	if(!encontrado)
+		cout << "El registro no se encuentra entre los datos.";
+	
+	readFile.close();
+}
+void buscarNumber( int key){
+	char Numero[9];
+	char IdNumber[14];	
+	ifstream readFile("Numeros.bin",ios::binary);
+	readFile.seekg(sizeof(int)+sizeof(int)+sizeof(bool));
+	//cout << rrn <<"||"<< recordNumber<<"||" << indexFlag <<endl;
+	bool encontrado = false;
+ 	while(true){
+		if(readFile.eof())
+			break;
+		
+		readFile.read(reinterpret_cast<char*>(&Numero), sizeof(Numero) );
+		readFile.read(reinterpret_cast<char*>(&IdNumber), sizeof(IdNumber) );				
+		stringstream ss;
+		for (int i = 0; i < sizeof(Numero); ++i)					
+			ss<< Numero[i];	
+
+		int keyLeida = atoi(ss.str().c_str());	
+		cout << keyLeida << endl;	
+		if(keyLeida == key){
+			encontrado = true;
+			cout << "Numero: " << Numero <<endl;
+			cout << "Id del cliente: " << IdNumber << endl;	
 			break;
 		}
 
