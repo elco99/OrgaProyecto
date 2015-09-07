@@ -35,6 +35,7 @@ void modificarNumber();
 void buscarCityIndexado(int);
 void buscarClientIndexado(unsigned long key);
 void buscarNumberIndexado( int key);
+void buscarCity(int key);
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -979,6 +980,40 @@ void buscarNumberIndexado( int key){
 		cout << "Numero: " << Numero <<endl;
 		cout << "Id del cliente: " << IdNumber << endl;	
 	}else
+		cout << "El registro no se encuentra entre los datos.";
+	
+	readFile.close();
+}
+//busqueda secuenial sin index.
+void buscarCity(int key){
+	cout<< "entro" << endl;
+	char IdCiudad[4];
+	char NameCiudad[40];	
+	ifstream readFile("Ciudades.bin",ios::binary);
+	readFile.seekg(sizeof(int)+sizeof(int)+sizeof(bool));
+	//cout << rrn <<"||"<< recordNumber<<"||" << indexFlag <<endl;
+	bool encontrado = false;
+ 	while(true){
+
+		if(readFile.eof())
+			break;
+		readFile.read(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+		readFile.read(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+		stringstream ss;
+		for (int i = 0; i < sizeof(IdCiudad); ++i){							
+			ss<< IdCiudad[i];	
+		}
+		int keyLeida = atoi(ss.str().c_str());	
+		cout << keyLeida << endl;	
+		if(keyLeida == key){
+			encontrado = true;
+			cout << "Id Ciudad : " << IdCiudad <<endl;
+			cout << "Nombre de la ciudad: " << NameCiudad << endl;	
+			break;
+		}
+
+	}
+	if(!encontrado)
 		cout << "El registro no se encuentra entre los datos.";
 	
 	readFile.close();
