@@ -29,6 +29,7 @@ int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 void agregarCity();
 void agregarClient();
 void agregarNumero();
+void modificarCity();
 
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
@@ -807,4 +808,33 @@ void agregarNumero(){
 		writeFile.write(reinterpret_cast<char*>(&Id), sizeof(Id));
 		writeFile.close();
 	}
+}
+void modificarCity(){
+	char IdCiudad[4];
+	char NameCiudad[40];
+	string leerId = "", leerDato = "",key = "";
+	cout << "Ingrese la llave de la ciudad que desea modificar"<<endl;
+	cin >>key;
+	int position = PosicionIngresoOrdenadoAlIndice(indexCityKey, atoi(key.c_str()));
+	cout << "Ingrese el Id de la ciudad: ";
+	cin >> leerId;
+	stringstream ss;
+	for (int i = 0; i < sizeof(IdCiudad); ++i){
+		IdCiudad[i] = leerId[i];
+		ss<< leerId[i];
+	}
+	
+	cout << "Ingrese el nombre de la ciudad: ";
+	cin >> leerDato;
+	for (int i = 0; i < sizeof(NameCiudad); ++i){
+		NameCiudad[i] = leerDato[i];
+	}
+	ofstream writeFile("Ciudades.bin", ofstream::in | ofstream :: out);
+	int rrnModificar = atoi(indexCityRRN.at(position).c_str());
+	writeFile.seekp(HeaderSize + rrnModificar*( sizeof(IdCiudad) + sizeof(NameCiudad) )  );
+	writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad));
+	writeFile.write(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad));
+	writeFile.close();
+	/*int position2 = PosicionIngresoOrdenadoAlIndice( indexCityKey  , atoi(ss.str().c_str()) );
+	indexCityKey.insert(indexCityKey.begin()+ position2, ss.str());*/
 }
