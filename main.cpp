@@ -32,6 +32,7 @@ void agregarNumero();
 void modificarCity();
 void modificarClient();
 void modificarNumber();
+void buscarCityIndexado(int);
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -920,4 +921,23 @@ void modificarNumber(){
 	writeFile.close();
 	/*int position2 = PosicionIngresoOrdenadoAlIndice( indexCityKey  , atoi(ss.str().c_str()) );
 	indexCityKey.insert(indexCityKey.begin()+ position2, ss.str());*/
+}
+//busqueda directa con index
+void buscarCityIndexado(int key){
+	char IdCiudad[4];
+	char NameCiudad[40];
+	
+	int position = PosicionIngresoOrdenadoAlIndice(indexCityKey, key);
+	string rrn = indexCityRRN.at(position);
+	ifstream readFile("Ciudades.bin", ios::binary);
+	if (position != -1){
+		readFile.seekg(HeaderSize + atoi((rrn).c_str())*( sizeof(IdCiudad) + sizeof(NameCiudad) ));
+		readFile.read(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad) );
+		readFile.read(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad) );		
+		cout << "Id Ciudad : " << IdCiudad <<endl;
+		cout << "Nombre de la ciudad: " << NameCiudad << endl;	
+	}else
+		cout << "El registro no se encuentra entre los datos.";
+	
+	readFile.close();
 }
