@@ -21,12 +21,20 @@ void NumberToBinary();
 void IndexCity();
 void IndexClient();
 void IndexNumber();
+<<<<<<< HEAD
 int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
 int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
 void writeIndex(vector<string> ,vector<string> , string , string );
 void borrarCity( int );
 void borrarClient( long );
 void borrarNumber( int );
+=======
+void borrarCity( int );
+void borrarClient( long );
+void borrarNumber( int );
+int PosicionIngresoOrdenadoAlIndice(vector<string>,  int);
+int PosicionIngresoOrdenadoAlIndiceLong(vector<string>, unsigned long );
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 void agregarCity();
 void agregarClient();
 void agregarNumero();
@@ -35,6 +43,7 @@ void modificarClient();
 void modificarNumber();
 void buscarCityIndexado(int);
 void buscarClientIndexado(unsigned long);
+<<<<<<< HEAD
 void buscarNumberIndexado(int);
 void buscarCity(int);
 void buscarClient(unsigned long);
@@ -44,6 +53,12 @@ void ListCity();//----
 void ListClient();
 void ListNumber();
 int menu();
+=======
+void buscarNumberIndexado( int);
+void buscarCity(int);
+void buscarClient( int);
+void buscarNumber( unsigned long );
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 const int HeaderSize = sizeof(int) + sizeof(int) + sizeof(bool);
 vector<string> indexCityRRN;
 vector<string> indexCityKey;
@@ -204,7 +219,11 @@ int main(int argc, char* argv[]){
 	}
 	
 	return 0;
+<<<<<<< HEAD
 }//fin main
+=======
+}
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 
 string GenerarId(){
 	string id;
@@ -239,10 +258,17 @@ void CityToBinary(){
 	outputFile.write( reinterpret_cast<char*>(&rrn), sizeof(int) );
 	outputFile.write( reinterpret_cast<char*>(&recordNumber), sizeof(int) );
 	outputFile.write( reinterpret_cast<char*>(&indexFlag), sizeof(bool)  );
+<<<<<<< HEAD
 	char EndOfFile;
 	while(file >> EndOfFile){
 		/*if(file.eof())
 			break;*/
+=======
+
+	while(true){
+		if(file.eof())
+			break;
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 		char IdCiudad[4];
 		char NameCiudad[40];
 		string temp = "", temp1 = "";
@@ -281,10 +307,16 @@ void ClientToBinary(){
 	outputFile.write( reinterpret_cast<char*>(&rrn), sizeof(int) );
 	outputFile.write( reinterpret_cast<char*>(&recordNumber), sizeof(int) );
 	outputFile.write( reinterpret_cast<char*>(&indexFlag), sizeof(bool)  );
+<<<<<<< HEAD
 	char EndOfFile;
 	while(file >> EndOfFile){
 		/*if(file.eof())
 			break;*/
+=======
+	while(true){
+		if(file.eof())
+			break;
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 		char IdClient[14];
 		char NameClient[40];
 		char Gender[2];
@@ -332,10 +364,16 @@ void CallToBinary(){
 	char FechaInicio[20];
 	char FechaFinal[20];
 	char NumDestino[9];
+<<<<<<< HEAD
 	char EndOfFile;
 	while(file >> EndOfFile){
 		/*if (file.eof())
 			break;*/
+=======
+	while(true){
+		if (file.eof())
+			break;
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 		
 		string temp1 = "", temp2 = "",temp3 = "",temp4 = "",temp5 = "";
 		getline(file, temp1, ',');
@@ -383,10 +421,16 @@ void NumberToBinary(){
 	outputFile.write( reinterpret_cast<char*>(&rrn), sizeof(int) );
 	outputFile.write( reinterpret_cast<char*>(&recordNumber), sizeof(int) );
 	outputFile.write( reinterpret_cast<char*>(&indexFlag), sizeof(bool)  );
+<<<<<<< HEAD
 	char EndOfFile;
 	while(file >> EndOfFile){
 		/*if(file.eof())
 			break;*/
+=======
+	while(true){
+		if(file.eof())
+			break;
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 		char Numero[9];
 		char Id[14];
 		string temp = "", temp1 = "";
@@ -409,6 +453,7 @@ void NumberToBinary(){
 	outputFile.close();
 	//ListNumber();
 }
+<<<<<<< HEAD
 void ListCity(){
 	int rrn=-1, recordNumber = 0, endFile = 0;
 	bool indexFlag = 0;
@@ -546,6 +591,8 @@ void writeIndex(vector<string> indexRRN,vector<string> indexKey, string FileName
 	remarkFile.write(reinterpret_cast<char*>(&flag), sizeof(flag) );
 	remarkFile.close();
 }
+=======
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 void IndexCity(){
 	indexCityKey.clear();
 	indexCityRRN.clear();
@@ -701,6 +748,7 @@ void IndexNumber(){
 	}	*/
 	readFile.close();
 }
+<<<<<<< HEAD
 void borrarCity( int key ){
 	char IdCiudad[4];
 	char NameCiudad[40];
@@ -796,6 +844,8 @@ void borrarNumber( int key ){
 	indexNumberRRN.erase(indexNumberRRN.begin() +position);
 	writeFile.close();
 }
+=======
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 int PosicionIngresoOrdenadoAlIndice(vector<string> indexKey  , int key){
     int low = 0;
     int high = indexKey.size() - 1;
@@ -896,6 +946,104 @@ int PosicionIngresoOrdenadoAlIndiceLong(vector<string> indexKey  , unsigned long
     }
     return -1;
 }
+<<<<<<< HEAD
+=======
+void borrarCity( int key ){
+	char IdCiudad[4];
+	char NameCiudad[40];
+	
+	int position = PosicionIngresoOrdenadoAlIndice(indexCityKey, key);
+	string rrn = indexCityRRN.at(position);
+	int rrnInteger = atoi(rrn.c_str());
+	stringstream rrnToString;
+	ifstream readFile("Ciudades.bin", ios::binary);
+	readFile.seekg(0);
+	int rrnHeader;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.close();
+	ofstream writeFile("Ciudades.bin", ios::out | ios::in);
+	if (position != -1){
+		IdCiudad[0] ='*';
+		rrnToString<< rrnHeader;
+		for (int i = 0; i < rrnToString.str().size(); ++i)
+		{
+
+			NameCiudad[i] = rrnToString.str()[i];
+		}
+		writeFile.seekp(HeaderSize + atoi((rrn).c_str())*( sizeof(IdCiudad) + sizeof(NameCiudad) )  );
+		writeFile.write(reinterpret_cast<char*>(&IdCiudad), sizeof(IdCiudad) );
+		writeFile.write(reinterpret_cast<char*>(&NameCiudad), sizeof(NameCiudad) );// se escribe el rrn en el header
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&rrnInteger), sizeof(rrnInteger));
+	}
+	indexCityKey.erase(indexCityKey.begin() +position);
+	indexCityRRN.erase(indexCityRRN.begin() +position);
+	writeFile.close();
+}
+void borrarClient( long key ){
+	char IdClient[14];
+	char NameClient[40];
+	char Gender[2];
+	char IdCiudad[4];
+	int position = PosicionIngresoOrdenadoAlIndiceLong(indexClientKey, key);
+	string rrn = indexClientRRN.at(position);
+	int rrnInteger = atoi(rrn.c_str());
+	stringstream rrnToString;
+	ifstream readFile("Clientes.bin", ios::binary);
+	readFile.seekg(0);
+	int rrnHeader;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.close();
+	ofstream writeFile("Clientes.bin", ios::out | ios::in);
+	if (position != -1){
+		IdClient[0] ='*';
+		rrnToString<< rrnHeader;
+		for (int i = 0; i < rrnToString.str().size(); ++i){
+			NameClient[i] = rrnToString.str()[i];
+		}
+		writeFile.seekp(HeaderSize + atoi((rrn).c_str())*( sizeof(IdClient) + sizeof(NameClient) + sizeof(Gender) + sizeof(IdCiudad))  );
+		writeFile.write(reinterpret_cast<char*>(&IdClient), sizeof(IdClient) );
+		writeFile.write(reinterpret_cast<char*>(&NameClient), sizeof(NameClient) );// se escribe el rrn en el header
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&rrnInteger), sizeof(rrnInteger));
+	}
+	indexClientKey.erase(indexClientKey.begin() +position);
+	indexClientRRN.erase(indexClientRRN.begin() +position);
+	writeFile.close();
+}
+void borrarNumber( int key ){
+	char Numero[9];
+	char Id[14];
+	
+	int position = PosicionIngresoOrdenadoAlIndice(indexNumberKey, key);
+	string rrn = indexNumberRRN.at(position);
+	int rrnInteger = atoi(rrn.c_str());
+	stringstream rrnToString;
+	ifstream readFile("Numeros.bin", ios::binary);
+	readFile.seekg(0);
+	int rrnHeader;
+	readFile.read(reinterpret_cast<char*>(&rrnHeader), sizeof(int));
+	readFile.close();
+	ofstream writeFile("Numeros.bin", ios::out | ios::in);
+	if (position != -1){
+		Numero[0] ='*';
+		rrnToString<< rrnHeader;
+		for (int i = 0; i < rrnToString.str().size(); ++i)
+		{
+
+			Id[i] = rrnToString.str()[i];
+		}
+		writeFile.seekp(HeaderSize + atoi((rrn).c_str())*( sizeof(Numero) + sizeof(Id) )  );
+		writeFile.write(reinterpret_cast<char*>(&Numero), sizeof(Numero) );
+		writeFile.write(reinterpret_cast<char*>(&Id), sizeof(Id) );// se escribe el rrn en el header
+		writeFile.seekp(0);
+		writeFile.write(reinterpret_cast<char*>(&rrnInteger), sizeof(rrnInteger));
+	}
+	indexNumberKey.erase(indexNumberKey.begin() +position);
+	indexNumberRRN.erase(indexNumberRRN.begin() +position);
+	writeFile.close();
+}
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 void agregarCity(){
 	ifstream readFile("Ciudades.bin", ios::binary);
 	char IdCiudad[4];
@@ -1115,7 +1263,10 @@ void modificarCity(){
 	char IdCiudad[4];
 	char NameCiudad[40];
 	string leerId = "", leerDato = "",key = "";
+<<<<<<< HEAD
 	cout << "1. Modificar llave\n2. Modificar Campo\n" << endl;
+=======
+>>>>>>> 95343f5146c57e1ee8b04d47466e81b4f7db7090
 	cout << "Ingrese la llave de la ciudad que desea modificar"<<endl;
 	cin >>key;
 	int position = PosicionIngresoOrdenadoAlIndice(indexCityKey, atoi(key.c_str()));
